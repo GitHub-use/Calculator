@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+    <TextView
+        android:id="@+id/showtextview"
+        android:gravity="bottom|end"
+        android:layout_width="match_parent"
+        android:layout_height="150sp"
+        android:text="0"
+        android:background="#ffffff"
+        android:layout_alignParentTop="true"
+        android:textSize="50sp"/>
+    <View
+        android:id="@+id/lean"
+        android:layout_width="match_parent"
+        android:layout_height="1sp"
+        android:layout_below="@id/showtextview"
+        android:background="#9B9595"
+        />
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/lean">
+        <Button android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="AC"
+            android:id="@+id/button_first"
+            android:background="#ffffff"
+            android:textColor="#0D89EB"
+            android:textSize="30sp"/>
+        <Button android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text="("
+            android:id="@+id/button_second"
+            android:background="#ffffff"
+            android:textColor="#0D89EB"
+            android:textSize="30sp"
+            />
+        <Button android:layout_rowWeight="1"
+            android:layout_columnWeight="1"
+            android:text=")"
+            android:id="@+id/button_third"
+            android:background="#ffffff"
+            android:textColor="#0D89EB"
+            android:textSize="30sp"/>
+
+    </GridLayout>
+</RelativeLayout>
