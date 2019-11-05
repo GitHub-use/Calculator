@@ -8,38 +8,49 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean first_input_tag=true;
+    private int a = 0;
+    private int b = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final Button button_first=(Button) findViewById(R.id.button_first);
-        final TextView textView_show = (TextView) findViewById(R.id.showtextview);
-        final Button button_second = findViewById(R.id.button_second);
-        final Button button_third = findViewById(R.id.button_third);
-        button_first.setOnClickListener(new View.OnClickListener() {
+        final Button button_number_7 = findViewById(R.id.button_firnin);
+        final Button button_util_add = findViewById(R.id.button_secsix);
+        final Button button_number_8 = findViewById(R.id.buttonsecze);
+        final TextView textview_show = findViewById(R.id.showtextview);
+        final Button button_util_ac = findViewById(R.id.button_firfif);
+        button_number_7.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textView_show.setText(button_first.getText());
+                if(first_input_tag){
+                    first_input_tag=false;
+                    textview_show.setText(button_number_7.getText());
+                }else{
+                    textview_show.append(button_number_7.getText());
+                }
             }
-        });
-
-        button_second.setOnClickListener(new View.OnClickListener() {
+        }
+        );
+        button_number_8.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                textView_show.append(button_second.getText());
+                if(first_input_tag){
+                    first_input_tag=false;
+                    textview_show.setText(button_number_8.getText());
+                }else{
+                    textview_show.append(button_number_8.getText());
+                }
             }
-        });
-
-        button_third.setOnClickListener(new View.OnClickListener(){
-
+        }
+        );
+        button_util_ac.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view){
-                textView_show.append("\n");
+            public void onClick(View view) {
+                first_input_tag=true;
+                textview_show.setText("0");
             }
         });
-    }
+     }
 }
 
-class deal{
-
-}
