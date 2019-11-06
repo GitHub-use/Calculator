@@ -6,16 +6,25 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.FormatFlagsConversionMismatchException;
 import java.util.Stack;
+
+import static android.widget.Toast.*;
 
 public class MainActivity extends AppCompatActivity {
     private boolean first_input_tag=true;//是否第一次输入
     private boolean input_number=false;//前一位是否有数字
     private boolean finish_reslut=false;
     private boolean first_result=false;//前面是否存在乘除法
-    private int a = 0;
-    private int b = 0;
-    Stack<Integer> stack_number = new Stack<Integer>();
+    private boolean dec = false;//小数
+    private boolean sta_dec = false;//全局小数
+    private int tag=0;//精度计数
+    private String a = "";
+    Float b = 0f;
+    Stack<Float> stack_float = new Stack<Float>();
+    Stack<String> stack_number = new Stack<String>();
     Stack<String> stack_tag = new Stack<String>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +46,8 @@ public class MainActivity extends AppCompatActivity {
         final Button button_number_6 = findViewById(R.id.button_secfif);
         final Button button_number_9 = findViewById(R.id.button_secfir);
         final Button button_util_jian = findViewById(R.id.button_thize);
+        final Button button_util_chu = findViewById(R.id.button_fireig);
+        final Button button_util_dian=findViewById(R.id.button_thifor);
         button_number_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -48,10 +59,15 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_0.getText());
-                    a=a*10+0;
                 }else{
                     textview_show.append(button_number_0.getText());
-                    a=a*10+0;
+
+                }
+                if(dec){
+                    a=a+Float.valueOf((float)Math.pow(0,0));
+                    tag=tag+1;
+                }else{
+                    a=a+"0";
                 }
             }
         });
@@ -66,10 +82,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_1.getText());
-                    a=a*10+1;
+                    a=a+"1";
                 }else{
                     textview_show.append(button_number_1.getText());
-                    a=a*10+1;
+                    a=a+"1";
                 }
             }
         });
@@ -84,10 +100,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_2.getText());
-                    a=a*10+2;
+                    a=a+"2";
                 }else{
                     textview_show.append(button_number_2.getText());
-                    a=a*10+2;
+                    a=a+"2";
                 }
             }
         });
@@ -102,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_3.getText());
-                    a=a*10+3;
+                    a=a+"3";
                 }else{
                     textview_show.append(button_number_3.getText());
-                    a=a*10+3;
+                    a=a+"3";
                 }
             }
         });
@@ -120,10 +136,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_4.getText());
-                    a=a*10+4;
+                    a=a+"4";
                 }else{
                     textview_show.append(button_number_4.getText());
-                    a=a*10+4;
+                    a=a+"4";
                 }
             }
         });
@@ -138,10 +154,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_5.getText());
-                    a=a*10+5;
+                    a=a+"5";
                 }else{
                     textview_show.append(button_number_5.getText());
-                    a=a*10+5;
+                    a=a+"5";
                 }
             }
         });
@@ -156,10 +172,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_6.getText());
-                    a=a*10+6;
+                    a=a+"6";
                 }else{
                     textview_show.append(button_number_6.getText());
-                    a=a*10+6;
+                    a=a+"6";
                 }
             }
         });
@@ -174,10 +190,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_7.getText());
-                    a=a*10+7;
+                    a=a+"7";
                 }else{
                     textview_show.append(button_number_7.getText());
-                    a=a*10+7;
+                    a=a+"7";
                 }
             }
         }
@@ -193,10 +209,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_8.getText());
-                    a=a*10+8;
+                    a=a+"8";
                 }else{
                     textview_show.append(button_number_8.getText());
-                    a=a*10+8;
+                    a=a+"8";
                 }
             }
         }
@@ -212,10 +228,10 @@ public class MainActivity extends AppCompatActivity {
                 if(first_input_tag){
                     first_input_tag=false;
                     textview_show.setText(button_number_9.getText());
-                    a=a*10+9;
+                    a=a+"9";
                 }else{
                     textview_show.append(button_number_9.getText());
-                    a=a*10+9;
+                    a=a+"9";
                 }
             }
         });
@@ -225,7 +241,9 @@ public class MainActivity extends AppCompatActivity {
                 first_input_tag=true;
                 textview_show.setText("0");
                 input_number=false;
-                a=0;
+                a="";
+                tag=0;
+                dec=false;
             }
         });
         button_util_add.setOnClickListener(new View.OnClickListener() {
@@ -234,17 +252,18 @@ public class MainActivity extends AppCompatActivity {
                 if(input_number){
                     if(first_result){
                         switch (stack_tag.pop()){
-                            case "X":a=a*stack_number.pop();break;
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
                         first_result=false;
                     }
                     stack_number.push(a);
-                    a=0;
+                    a="";
                     stack_tag.push("+");
                     input_number=false;
                     textview_show.append("+");
                 }else{
                     System.out.println("err!");
+                    Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
             }
@@ -252,9 +271,16 @@ public class MainActivity extends AppCompatActivity {
         button_util_result.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if(input_number){
+
+                }else {
+                    Toast.makeText(getApplicationContext(),"input number", LENGTH_SHORT).show();
+                    return;
+                }
                 if(first_result){
                     switch (stack_tag.pop()){
-                        case "X":a=a*stack_number.pop();first_result=false;break;
+                        case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));first_result=false;break;
+                        case "÷":a=String.valueOf(Integer.valueOf(stack_number.pop())/Integer.valueOf(a));first_result=false;break;
                     }
                 }
                 while (!stack_number.isEmpty()){
@@ -263,12 +289,12 @@ public class MainActivity extends AppCompatActivity {
                     final String temp = stack_tag.pop();
                     stack_tag.push(temp);
                     if(temp=="+"){
-                        a=a+stack_number.pop();
+                        a=String.valueOf(Integer.valueOf(a)+Integer.valueOf(stack_number.pop()));
                     }else {
-                        a=stack_number.pop()-a;
+                        a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
                     }
                 }else{
-                    a=a+stack_number.pop();
+                    a=String.valueOf(Integer.valueOf(a)+Integer.valueOf(stack_number.pop()));
                 }
                 break;
                 case "-":if(!stack_tag.isEmpty()){
@@ -277,16 +303,19 @@ public class MainActivity extends AppCompatActivity {
                     if(temp=="-"){
                         a=a+stack_number.pop();
                     }else{
-                        a=stack_number.pop()-a;
+                        a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
                     }
                 }else{
-                    a=stack_number.pop()-a;
+                    a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
                 }break;
                 }
 
             }
-                textview_show.append("\n"+String.valueOf(a));
-                a=0;
+                if(sta_dec){
+                    textview_show.append("\n"+String.valueOf((float)((Math.round(Float.valueOf(a)*100))/100)));
+                }else{
+                textview_show.append("\n"+String.valueOf(a));}
+                a="";
                 finish_reslut=true;
                 input_number=false;
             }
@@ -297,18 +326,19 @@ public class MainActivity extends AppCompatActivity {
                 if(input_number){
                     if(first_result){
                         switch (stack_tag.pop()){
-                            case "X":a=a*stack_number.pop();break;
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
                         first_result=false;
                     }
                     stack_number.push(a);
-                    a=0;
+                    a="";
                     stack_tag.push("X");
                     input_number=false;
                     textview_show.append("X");
                     first_result=true;
                 }else{
                     System.out.println("err!");
+                    Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
             }
@@ -319,19 +349,59 @@ public class MainActivity extends AppCompatActivity {
                 if(input_number){
                     if(first_result){
                         switch (stack_tag.pop()){
-                            case "X":a=a*stack_number.pop();break;
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
                         first_result=false;
                     }
                     stack_number.push(a);
-                    a=0;
+                    a="";
                     stack_tag.push("-");
                     input_number=false;
                     textview_show.append("-");
                 }else{
                     System.out.println("err!");
+                    Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
+            }
+        });
+        button_util_chu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_number){
+                    if(first_result){
+                        switch (stack_tag.pop()){
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
+                            case "÷":a=String.valueOf(Integer.valueOf(stack_number.pop())/Integer.valueOf(a));break;
+                        }
+                        first_result=false;
+                    }
+                    stack_number.push(a);
+                    a="";
+                    stack_tag.push("÷");
+                    input_number=false;
+                    textview_show.append("÷");
+                    first_result=true;
+                }else{
+                    System.out.println("err!");
+                    Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
+                }
+                input_number=false;
+            }
+        });
+        button_util_dian.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sta_dec=true;
+                if(dec){
+                    Toast.makeText(getApplicationContext(),"已经有点了", LENGTH_SHORT).show();
+                    return;
+                }else{
+                    dec=true;
+                    textview_show.append(".");
+                    a=a+".";
+                    tag=tag+1;
+                }
             }
         });
      }
