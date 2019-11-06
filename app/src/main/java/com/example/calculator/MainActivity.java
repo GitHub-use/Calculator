@@ -244,6 +244,7 @@ public class MainActivity extends AppCompatActivity {
                 a="";
                 tag=0;
                 dec=false;
+                sta_dec=false;
             }
         });
         button_util_add.setOnClickListener(new View.OnClickListener() {
@@ -266,6 +267,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
+                dec=false;
             }
         });
         button_util_result.setOnClickListener(new View.OnClickListener() {
@@ -279,8 +281,20 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if(first_result){
                     switch (stack_tag.pop()){
-                        case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));first_result=false;break;
-                        case "÷":a=String.valueOf(Integer.valueOf(stack_number.pop())/Integer.valueOf(a));first_result=false;break;
+                        case "X":
+                            if(sta_dec){
+                                a=String.valueOf(Float.valueOf(a)*Float.valueOf(stack_number.pop()));
+                            }else{
+                            a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));}
+                            first_result=false;
+                            break;
+                        case "÷":
+                            if(sta_dec){
+                                a=String.valueOf(Float.valueOf(stack_number.pop())/Float.valueOf(a));
+                            }else{
+                            a=String.valueOf(Integer.valueOf(stack_number.pop())/Integer.valueOf(a));}
+                            first_result=false;
+                            break;
                     }
                 }
                 while (!stack_number.isEmpty()){
@@ -294,30 +308,47 @@ public class MainActivity extends AppCompatActivity {
                         a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
                     }
                 }else{
-                    a=String.valueOf(Integer.valueOf(a)+Integer.valueOf(stack_number.pop()));
+                    if(sta_dec){
+                        float temp1= Float.valueOf(a);
+                        float temp2=Float.valueOf(stack_number.pop());
+                        temp1=temp2+temp1;
+                        a=String.valueOf(temp1);
+                    }else{
+                    a=String.valueOf(Integer.valueOf(a)+Integer.valueOf(stack_number.pop()));}
                 }
                 break;
                 case "-":if(!stack_tag.isEmpty()){
                     String temp = stack_tag.pop();
                     stack_tag.push(temp);
                     if(temp=="-"){
-                        a=a+stack_number.pop();
+                        if(sta_dec){
+                            a=String.valueOf(Float.valueOf(a)+Float.valueOf(stack_number.pop()));
+                        }else{
+                        a=String.valueOf(Integer.valueOf(a)+Integer.valueOf(stack_number.pop()));}
                     }else{
-                        a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
+                        if(sta_dec){
+                            a=String.valueOf(Float.valueOf(stack_number.pop())-Float.valueOf(a));
+                        }else{
+                        a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));}
                     }
                 }else{
-                    a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));
+                    if(sta_dec){
+                        a=String.valueOf(Float.valueOf(stack_number.pop())-Float.valueOf(a));
+                    }else{
+                    a=String.valueOf(Integer.valueOf(stack_number.pop())-Integer.valueOf(a));}
                 }break;
                 }
 
             }
                 if(sta_dec){
-                    textview_show.append("\n"+String.valueOf((float)((Math.round(Float.valueOf(a)*100))/100)));
+                    textview_show.append("\n"+String.valueOf(Float.valueOf(a).toString()));
                 }else{
                 textview_show.append("\n"+String.valueOf(a));}
                 a="";
                 finish_reslut=true;
                 input_number=false;
+                dec=false;
+                sta_dec=false;
             }
         });
         button_util_cheng.setOnClickListener(new View.OnClickListener() {
@@ -341,6 +372,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
+                dec=false;
             }
         });
         button_util_jian.setOnClickListener(new View.OnClickListener() {
@@ -363,6 +395,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
                 }
                 input_number=false;
+                dec=false;
             }
         });
         button_util_chu.setOnClickListener(new View.OnClickListener() {
@@ -393,6 +426,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 sta_dec=true;
+                first_input_tag=false;
                 if(dec){
                     Toast.makeText(getApplicationContext(),"已经有点了", LENGTH_SHORT).show();
                     return;
