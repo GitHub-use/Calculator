@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private boolean dec = false;//小数
     private boolean sta_dec = false;//全局小数
     private int tag=0;//精度计数
+    private boolean kuohao_first_reslut=false;
+    private boolean kuohao=false;
     private String a = "";
     Float b = 0f;
     Stack<Float> stack_float = new Stack<Float>();
@@ -48,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
         final Button button_util_jian = findViewById(R.id.button_thize);
         final Button button_util_chu = findViewById(R.id.button_fireig);
         final Button button_util_dian=findViewById(R.id.button_thifor);
+        final Button button_util_zuokuohao = findViewById(R.id.button_fif);
+        final Button button_util_youkuohoa = findViewById(R.id.button_six);
         button_number_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -251,7 +255,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(input_number){
-                    if(first_result){
+                    if(first_result&&kuohao_first_reslut){
                         switch (stack_tag.pop()){
                             case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
@@ -355,7 +359,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(input_number){
-                    if(first_result){
+                    if(first_result&&kuohao_first_reslut){
                         switch (stack_tag.pop()){
                             case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
@@ -366,7 +370,11 @@ public class MainActivity extends AppCompatActivity {
                     stack_tag.push("X");
                     input_number=false;
                     textview_show.append("X");
-                    first_result=true;
+                    if(kuohao){
+                        kuohao_first_reslut=true;
+                    }else{
+                        first_result=true;
+                    }
                 }else{
                     System.out.println("err!");
                     Toast.makeText(getApplicationContext(),"err!", LENGTH_SHORT).show();
@@ -436,6 +444,116 @@ public class MainActivity extends AppCompatActivity {
                     a=a+".";
                     tag=tag+1;
                 }
+            }
+        });
+        button_util_zuokuohao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textview_show.append("(");
+                stack_tag.push("(");
+                kuohao=true;
+            }
+        });
+        button_util_youkuohoa.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (input_number) {
+
+                } else {
+                    Toast.makeText(getApplicationContext(), "input number", LENGTH_SHORT).show();
+                    return;
+                }
+                if (kuohao_first_reslut) {
+                    switch (stack_tag.pop()) {
+                        case "X":
+                            if (sta_dec) {
+                                a = String.valueOf(Float.valueOf(a) * Float.valueOf(stack_number.pop()));
+                            } else {
+                                a = String.valueOf(Integer.valueOf(a) * Integer.valueOf(stack_number.pop()));
+                            }
+                            first_result = false;
+                            break;
+                        case "÷":
+                            if (sta_dec) {
+                                a = String.valueOf(Float.valueOf(stack_number.pop()) / Float.valueOf(a));
+                            } else {
+                                a = String.valueOf(Integer.valueOf(stack_number.pop()) / Integer.valueOf(a));
+                            }
+                            first_result = false;
+                            break;
+                    }
+                }
+                while (!stack_number.isEmpty()) {
+                    switch (stack_tag.pop()) {
+                        case "+":
+                            if (!stack_tag.isEmpty()) {
+                                final String temp = stack_tag.pop();
+                                stack_tag.push(temp);
+                                if (temp == "+") {
+                                    a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
+                                } else {
+                                    a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
+                                }
+                            } else {
+                                if (sta_dec) {
+                                    float temp1 = Float.valueOf(a);
+                                    float temp2 = Float.valueOf(stack_number.pop());
+                                    temp1 = temp2 + temp1;
+                                    a = String.valueOf(temp1);
+                                } else {
+                                    a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
+                                }
+                            }
+                            break;
+                        case "-":
+                            if (!stack_tag.isEmpty()) {
+                                String temp = stack_tag.pop();
+                                stack_tag.push(temp);
+                                if (temp == "-") {
+                                    if (sta_dec) {
+                                        a = String.valueOf(Float.valueOf(a) + Float.valueOf(stack_number.pop()));
+                                    } else {
+                                        a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
+                                    }
+                                } else {
+                                    if (sta_dec) {
+                                        a = String.valueOf(Float.valueOf(stack_number.pop()) - Float.valueOf(a));
+                                    } else {
+                                        a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
+                                    }
+                                }
+                            } else {
+                                if (sta_dec) {
+                                    a = String.valueOf(Float.valueOf(stack_number.pop()) - Float.valueOf(a));
+                                } else {
+                                    a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
+                                }
+                            }
+                            break;
+                    }
+
+                }
+                if (first_result) {
+                    switch (stack_tag.pop()) {
+                        case "X":
+                            if (sta_dec) {
+                                a = String.valueOf(Float.valueOf(a) * Float.valueOf(stack_number.pop()));
+                            } else {
+                                a = String.valueOf(Integer.valueOf(a) * Integer.valueOf(stack_number.pop()));
+                            }
+                            first_result = false;
+                            break;
+                        case "÷":
+                            if (sta_dec) {
+                                a = String.valueOf(Float.valueOf(stack_number.pop()) / Float.valueOf(a));
+                            } else {
+                                a = String.valueOf(Integer.valueOf(stack_number.pop()) / Integer.valueOf(a));
+                            }
+                            first_result = false;
+                            break;
+                    }
+                }
+                dec = false;
             }
         });
      }
