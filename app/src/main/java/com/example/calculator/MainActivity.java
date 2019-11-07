@@ -255,11 +255,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(input_number){
-                    if(first_result&&kuohao_first_reslut){
+                    if(!kuohao&&first_result){
                         switch (stack_tag.pop()){
                             case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
                         first_result=false;
+                    }
+                    if(kuohao&&kuohao_first_reslut){
+                        switch (stack_tag.pop()){
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
+                        }
+                        kuohao_first_reslut=false;
                     }
                     stack_number.push(a);
                     a="";
@@ -287,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                     switch (stack_tag.pop()){
                         case "X":
                             if(sta_dec){
-                                a=String.valueOf(Float.valueOf(a)*Float.valueOf(stack_number.pop()));
+                                a=String.valueOf(Double.valueOf(a)*Double.valueOf(stack_number.pop()));
                             }else{
                             a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));}
                             first_result=false;
@@ -353,17 +359,25 @@ public class MainActivity extends AppCompatActivity {
                 input_number=false;
                 dec=false;
                 sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
             }
         });
         button_util_cheng.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if(input_number){
-                    if(first_result&&kuohao_first_reslut){
+                    if(!kuohao&&first_result){
                         switch (stack_tag.pop()){
                             case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
                         }
                         first_result=false;
+                    }
+                    if(kuohao&&kuohao_first_reslut){
+                        switch (stack_tag.pop()){
+                            case "X":a=String.valueOf(Integer.valueOf(a)*Integer.valueOf(stack_number.pop()));break;
+                        }
+                        kuohao_first_reslut=false;
                     }
                     stack_number.push(a);
                     a="";
@@ -463,6 +477,7 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "input number", LENGTH_SHORT).show();
                     return;
                 }
+                textview_show.append(")");
                 if (kuohao_first_reslut) {
                     switch (stack_tag.pop()) {
                         case "X":
@@ -471,7 +486,7 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 a = String.valueOf(Integer.valueOf(a) * Integer.valueOf(stack_number.pop()));
                             }
-                            first_result = false;
+                            kuohao_first_reslut = false;
                             break;
                         case "÷":
                             if (sta_dec) {
@@ -479,37 +494,28 @@ public class MainActivity extends AppCompatActivity {
                             } else {
                                 a = String.valueOf(Integer.valueOf(stack_number.pop()) / Integer.valueOf(a));
                             }
-                            first_result = false;
+                            kuohao_first_reslut = false;
                             break;
                     }
                 }
-                while (!stack_number.isEmpty()) {
+                while (true) {
+                    if(stack_tag.peek()=="("){
+                        stack_tag.pop();
+                        break;
+                    }
                     switch (stack_tag.pop()) {
                         case "+":
-                            if (!stack_tag.isEmpty()) {
-                                final String temp = stack_tag.pop();
-                                stack_tag.push(temp);
-                                if (temp == "+") {
-                                    a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
-                                } else {
-                                    a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
-                                }
+                            final String temp = stack_tag.pop();
+                            stack_tag.push(temp);
+                            if (temp == "+"||temp=="(") {
+                                a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
                             } else {
-                                if (sta_dec) {
-                                    float temp1 = Float.valueOf(a);
-                                    float temp2 = Float.valueOf(stack_number.pop());
-                                    temp1 = temp2 + temp1;
-                                    a = String.valueOf(temp1);
-                                } else {
-                                    a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
-                                }
+                                a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
                             }
+
                             break;
                         case "-":
-                            if (!stack_tag.isEmpty()) {
-                                String temp = stack_tag.pop();
-                                stack_tag.push(temp);
-                                if (temp == "-") {
+                            if (stack_tag.peek() == "-") {
                                     if (sta_dec) {
                                         a = String.valueOf(Float.valueOf(a) + Float.valueOf(stack_number.pop()));
                                     } else {
@@ -522,13 +528,6 @@ public class MainActivity extends AppCompatActivity {
                                         a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
                                     }
                                 }
-                            } else {
-                                if (sta_dec) {
-                                    a = String.valueOf(Float.valueOf(stack_number.pop()) - Float.valueOf(a));
-                                } else {
-                                    a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
-                                }
-                            }
                             break;
                     }
 
@@ -554,6 +553,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 dec = false;
+                kuohao=false;
+                kuohao_first_reslut=false;
             }
         });
      }
