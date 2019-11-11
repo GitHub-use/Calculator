@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/linearlayout">
+<TableLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/fragment_first_edit"
+                android:textSize="50sp">
+
+            </EditText>
+            <TextView
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_first_edit"
+                android:text="0"
+                android:textSize="50sp"
+                android:id="@+id/fragment_first_textview"
+                >
+
+            </TextView>
+            <Spinner
+                android:layout_width="50sp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/fragment_first_edit"
+                android:layout_toRightOf="@id/fragment_first_edit"
+                android:entries="@array/first"/>
+            <Spinner
+                android:layout_width="50sp"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/fragment_first_textview"
+                android:layout_toRightOf="@id/fragment_first_textview"
+                android:layout_alignTop="@id/fragment_first_textview" />
+        </RelativeLayout>
+    </TableRow>
+    <TableRow
+        android:layout_weight="1"
+        android:layout_width="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/fragment_sec_edit"
+                android:textSize="50sp">
+
+            </EditText>
+            <TextView
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_sec_edit"
+                android:text="0"
+                android:textSize="50sp"
+                >
+
+            </TextView>
+        </RelativeLayout>
+    </TableRow>
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <EditText
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:id="@+id/fragment_thr_edit"
+                android:textSize="50sp">
+
+            </EditText>
+            <TextView
+                android:layout_width="300sp"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/fragment_thr_edit"
+                android:text="0"
+                android:textSize="50sp"
+                >
+
+            </TextView>
+        </RelativeLayout>
+    </TableRow>
+</TableLayout>
+</LinearLayout>

@@ -1,6 +1,8 @@
 package com.example.calculator;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,7 +15,7 @@ import java.util.Stack;
 
 import static android.widget.Toast.*;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends FragmentActivity {
     private boolean first_input_tag=true;//是否第一次输入
     private boolean input_number=false;//前一位是否有数字
     private boolean finish_reslut=false;
@@ -52,6 +54,13 @@ public class MainActivity extends AppCompatActivity {
         final Button button_util_dian=findViewById(R.id.button_thifor);
         final Button button_util_zuokuohao = findViewById(R.id.button_fif);
         final Button button_util_youkuohoa = findViewById(R.id.button_six);
+        final Button button_util_sin = findViewById(R.id.button_first);
+        final Button button_util_cos = findViewById(R.id.button_second);
+        final Button button_util_tan = findViewById(R.id.button_third);
+        final Button button_util_X = findViewById(R.id.button_for);
+        final Button button_util_sqrt = findViewById(R.id.button_firsix);
+        final Button button_util_percent = findViewById(R.id.button_firsev);
+        final Button button_util_change = findViewById(R.id.button_thisec);
         button_number_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -466,6 +475,7 @@ public class MainActivity extends AppCompatActivity {
                 textview_show.append("(");
                 stack_tag.push("(");
                 kuohao=true;
+                first_input_tag=false;
             }
         });
         button_util_youkuohoa.setOnClickListener(new View.OnClickListener() {
@@ -555,6 +565,123 @@ public class MainActivity extends AppCompatActivity {
                 dec = false;
                 kuohao=false;
                 kuohao_first_reslut=false;
+            }
+        });
+        button_util_sin.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                if(input_number){}else{
+                    Toast.makeText(getApplicationContext(),"输入一个数字", LENGTH_SHORT).show();
+                    return;
+                }
+                textview_show.append("\n"+String.valueOf(Math.sin(Double.valueOf(a))));
+                a="";
+                finish_reslut=true;
+                input_number=false;
+                dec=false;
+                sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
+            }
+        });
+        button_util_cos.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_number){}else{
+                    Toast.makeText(getApplicationContext(),"输入一个数字", LENGTH_SHORT).show();
+                    return;
+                }
+                textview_show.append("\n"+String.valueOf(Math.cos(Double.valueOf(a))));
+                a="";
+                finish_reslut=true;
+                input_number=false;
+                dec=false;
+                sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
+            }
+        });
+        button_util_tan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_number){}else{
+                    Toast.makeText(getApplicationContext(),"输入一个数字", LENGTH_SHORT).show();
+                    return;
+                }
+                textview_show.append("\n"+String.valueOf(Math.tan(Double.valueOf(a))));
+                a="";
+                finish_reslut=true;
+                input_number=false;
+                dec=false;
+                sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
+            }
+        });
+        button_util_X.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_number){}else{
+                    Toast.makeText(getApplicationContext(),"输入一个数字", LENGTH_SHORT).show();
+                    return;
+                }
+                if(sta_dec){
+                    Toast.makeText(getApplicationContext(),"请输入整数", LENGTH_SHORT);
+                    return;
+                }else{
+
+                }
+                int temp = Integer.valueOf(a);
+                int temp1 = temp-1;
+                while (temp1>0){
+                    temp=temp*temp1;
+                    temp1=temp1-1;
+                }
+                textview_show.append("\n"+String.valueOf(temp));
+                a="";
+                finish_reslut=true;
+                input_number=false;
+                dec=false;
+                sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
+            }
+        });
+        button_util_sqrt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(input_number){}else{
+                    Toast.makeText(getApplicationContext(),"输入一个数字", LENGTH_SHORT).show();
+                    return;
+                }
+                textview_show.append("\n"+String.valueOf(Math.sqrt(Double.valueOf(a))));
+                a="";
+                finish_reslut=true;
+                input_number=false;
+                dec=false;
+                sta_dec=false;
+                kuohao=false;
+                kuohao_first_reslut=false;
+            }
+        });
+        button_util_percent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String temp = textview_show.getText().toString();
+                int temp_index = temp.lastIndexOf(a);
+                temp = temp.substring(0,temp_index);
+                a=String.valueOf(Double.valueOf(a)/100);
+                textview_show.setText(temp+a);
+                dec=true;
+                sta_dec=true;
+            }
+        });
+        button_util_change.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container_first,new Activity_fragment()).commit();
+
+
             }
         });
      }
