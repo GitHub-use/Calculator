@@ -5,4 +5,15 @@
         <item>dm</item>
         <item>cm</item>
     </array>
+    <array name="lifang">
+        <item>立方米</item>
+        <item>立方分米</item>
+        <item>立方厘米</item>
+    </array>
+    <array name="bin">
+        <item>二</item>
+        <item>八</item>
+        <item>十</item>
+        <item>十六</item>
+    </array>
 </resources>

@@ -22,6 +22,12 @@
 
             </EditText>
             <TextView
+                android:id="@+id/textshow_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/fragment_first_edit"
+                android:text="m"/>
+            <TextView
                 android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fragment_first_edit"
@@ -31,18 +37,28 @@
                 >
 
             </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/fragment_first_textview"
+                android:layout_alignTop="@id/fragment_first_textview"
+                android:text="m"
+                android:id="@+id/text_show_second"/>
             <Spinner
+                android:id="@+id/spinner_first"
                 android:layout_width="50sp"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/fragment_first_edit"
                 android:layout_toRightOf="@id/fragment_first_edit"
                 android:entries="@array/first"/>
             <Spinner
+                android:id="@+id/spinner_second"
                 android:layout_width="50sp"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@id/fragment_first_textview"
                 android:layout_toRightOf="@id/fragment_first_textview"
-                android:layout_alignTop="@id/fragment_first_textview" />
+                android:layout_alignTop="@id/fragment_first_textview"
+                android:entries="@array/first"/>
         </RelativeLayout>
     </TableRow>
     <TableRow
@@ -56,7 +72,8 @@
                 android:layout_height="wrap_content"
                 android:text="0"
                 android:id="@+id/fragment_sec_edit"
-                android:textSize="50sp">
+                android:textSize="50sp"
+                >
 
             </EditText>
             <TextView
@@ -65,9 +82,43 @@
                 android:layout_below="@id/fragment_sec_edit"
                 android:text="0"
                 android:textSize="50sp"
+                android:id="@+id/fragment_sec_textview"
                 >
 
             </TextView>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立方米"
+                android:textColor="#ffffff"
+                android:layout_alignTop="@id/fragment_sec_edit"
+                android:layout_toRightOf="@id/fragment_sec_edit"
+                android:id="@+id/textview_second"
+                />
+            <Spinner
+                android:id="@+id/spinner_secfir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/fragment_sec_edit"
+                android:layout_toRightOf="@id/fragment_sec_edit"
+                android:entries="@array/lifang"
+                />
+            <TextView
+                android:id="@+id/textshow_secsec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="立方米"
+                android:textColor="#ffffff"
+                android:layout_toRightOf="@id/fragment_sec_textview"
+                android:layout_alignTop="@id/fragment_sec_textview"/>
+            <Spinner
+                android:id="@+id/spinner_secsec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/fragment_sec_textview"
+                android:layout_toRightOf="@id/fragment_sec_textview"
+                android:entries="@array/lifang"/>
+
         </RelativeLayout>
     </TableRow>
     <TableRow
@@ -85,15 +136,53 @@
                 android:textSize="50sp">
 
             </EditText>
+
             <TextView
+                android:id="@+id/textshow_thi"
                 android:layout_width="300sp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/fragment_thr_edit"
                 android:text="0"
-                android:textSize="50sp"
-                >
+                android:textSize="50sp">
 
             </TextView>
+            <TextView
+                android:id="@+id/textview_thifir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="二"
+                android:textColor="#ffffff"
+                android:layout_toRightOf="@id/fragment_thr_edit"
+                />
+            <TextView
+                android:id="@+id/textview_thisec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textshow_thi"
+                android:layout_alignTop="@id/textshow_thi"
+                android:textColor="#ffffff"
+                android:text="二"/>
+            <Spinner
+                android:id="@+id/spinner_thifir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/fragment_thr_edit"
+                android:entries="@array/bin"
+                />
+            <Spinner
+                android:id="@+id/spinner_thisec"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/textshow_thi"
+                android:layout_alignTop="@id/textshow_thi"
+                android:entries="@array/bin"/>
+            <Button
+                android:layout_below="@+id/textshow_thi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="返回"
+                android:id="@+id/button_second_return"
+                android:textSize="30sp"/>
         </RelativeLayout>
     </TableRow>
 </TableLayout>
