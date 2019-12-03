@@ -94,7 +94,7 @@
             android:layout_height="match_parent"
             android:id="@+id/button_eight"
             android:textAllCaps="false"
-            android:text="lg"
+            android:text="帮助"
             android:textSize="30sp"
             android:textColor="#ffffff"
             android:background="#ffffff"/>

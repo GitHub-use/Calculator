@@ -1,5 +1,6 @@
 package com.example.calculator;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.text.Layout;
 import android.view.LayoutInflater;
@@ -60,6 +61,13 @@ public class first_fragment extends Fragment {
         final Button button_util_sqrt = getActivity().findViewById(R.id.button_firsix);
         final Button button_util_percent = getActivity().findViewById(R.id.button_firsev);
         final Button button_util_change = getActivity().findViewById(R.id.button_thisec);
+        final Button button_util_lg = getActivity().findViewById(R.id.button_eight);
+        button_util_lg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                new AlertDialog.Builder(getContext()).setTitle("帮助").setMessage("这里是帮助").show();
+            }
+        });
         button_number_0.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -293,7 +301,7 @@ public class first_fragment extends Fragment {
                     Toast.makeText(getActivity().getApplicationContext(),"input number", LENGTH_SHORT).show();
                     return;
                 }
-                if(first_result){
+                if(first_result&&!kuohao){
                     switch (stack_tag.pop()){
                         case "X":
                             if(sta_dec){
@@ -483,7 +491,11 @@ public class first_fragment extends Fragment {
                     stack_tag.push("÷");
                     input_number=false;
                     textview_show.append("÷");
-                    first_result=true;
+                    if(kuohao){
+                        kuohao_first_reslut=true;
+                    }else{
+                        first_result=true;
+                    }
                 }else{
                     System.out.println("err!");
                     Toast.makeText(getActivity().getApplicationContext(),"err!", LENGTH_SHORT).show();
@@ -510,13 +522,15 @@ public class first_fragment extends Fragment {
         button_util_zuokuohao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(first_input_tag){
+                if(first_input_tag||finish_reslut){
                 textview_show.setText("(");}else{
                     textview_show.append("(");
                 }
                 stack_tag.push("(");
                 kuohao=true;
                 first_input_tag=false;
+                finish_reslut=false;
+
             }
         });
         button_util_youkuohoa.setOnClickListener(new View.OnClickListener() {
@@ -541,7 +555,7 @@ public class first_fragment extends Fragment {
                             break;
                         case "÷":
                             if (sta_dec) {
-                                a = String.valueOf(Float.valueOf(stack_number.pop()) / Float.valueOf(a));
+                                a = String.valueOf(Double.valueOf(stack_number.pop()) / Double.valueOf(a));
                             } else {
                                 a = String.valueOf(Integer.valueOf(stack_number.pop()) / Integer.valueOf(a));
                             }
@@ -559,9 +573,13 @@ public class first_fragment extends Fragment {
                             final String temp = stack_tag.pop();
                             stack_tag.push(temp);
                             if (temp == "+"||temp=="(") {
-                                a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));
+                                if(sta_dec){
+                                    a = String.valueOf(Double.valueOf(a) + Double.valueOf(stack_number.pop()));
+                                }else{
+                                a = String.valueOf(Integer.valueOf(a) + Integer.valueOf(stack_number.pop()));}
                             } else {
-                                a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));
+                                if (sta_dec){a = String.valueOf(Double.valueOf(stack_number.pop()) - Double.valueOf(a));}else{
+                                a = String.valueOf(Integer.valueOf(stack_number.pop()) - Integer.valueOf(a));}
                             }
 
                             break;
@@ -583,11 +601,11 @@ public class first_fragment extends Fragment {
                     }
 
                 }
-                if (first_result) {
+                if (first_result&&!kuohao) {
                     switch (stack_tag.pop()) {
                         case "X":
                             if (sta_dec) {
-                                a = String.valueOf(Float.valueOf(a) * Float.valueOf(stack_number.pop()));
+                                a = String.valueOf(Double.valueOf(a) * Double.valueOf(stack_number.pop()));
                             } else {
                                 a = String.valueOf(Integer.valueOf(a) * Integer.valueOf(stack_number.pop()));
                             }
@@ -595,7 +613,7 @@ public class first_fragment extends Fragment {
                             break;
                         case "÷":
                             if (sta_dec) {
-                                a = String.valueOf(Float.valueOf(stack_number.pop()) / Float.valueOf(a));
+                                a = String.valueOf(Double.valueOf(stack_number.pop()) / Double.valueOf(a));
                             } else {
                                 a = String.valueOf(Integer.valueOf(stack_number.pop()) / Integer.valueOf(a));
                             }
